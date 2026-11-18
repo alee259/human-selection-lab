@@ -5,7 +5,7 @@
   --border: #24303d;
   --text: #e8edf3;
   --muted: #8795a7;
-  --accent: #ff6b61;
+  --accent: #a8ffb2;
 }
 
 /* Page layout */
@@ -89,7 +89,7 @@ button {
 }
 
 button:hover {
-  background: #ff857c;
+  background: #a8ffb2;
 }
 
 /* Smaller screens */
@@ -163,10 +163,11 @@ button:hover {
 }
 
 /* Selected scenario */
+
 .scenario-card.selected {
-  background: #251b23;
+  background: rgba(168, 255, 178, 0.08);
   border-color: var(--accent);
-  box-shadow: 0 0 15px rgba(255, 107, 97, 0.12);
+  box-shadow: 0 0 15px rgba(168, 255, 178, 0.15);
 }
 
 /* Card text */

@@ -156,7 +156,7 @@ function displayResults(allResults) {
       label: `Run ${index + 1}`,
       data: results,
 
-      borderColor: highlighted ? "#ff6b61" : "rgba(255, 107, 97, 0.25)",
+      borderColor: highlighted ? "#a8ffb2" : "rgba(168, 255, 178, 0.25)",
 
       borderWidth: highlighted ? 3 : 1.5,
       pointRadius: 0,
