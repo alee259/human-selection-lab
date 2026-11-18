@@ -1,8 +1,11 @@
 const presets = {
   sickleCell: {
+    alleleLabel: "HbS",
+
     startingAlleleFreq: 0.02,
     populationSize: 500,
     generations: 150,
+    yearsPerGeneration: 25,
 
     enableMutation: false,
     enableGeneFlow: false,
@@ -22,9 +25,12 @@ const presets = {
   },
 
   lactase: {
+    alleleLabel: "Lactase-persistence-associated allele",
+
     startingAlleleFreq: 0.1,
     populationSize: 1000,
     generations: 150,
+    yearsPerGeneration: 25,
 
     enableMutation: false,
     enableGeneFlow: false,
@@ -44,9 +50,12 @@ const presets = {
   },
 
   founder: {
+    alleleLabel: "Hypothetical allele A",
+
     startingAlleleFreq: 0.5,
     populationSize: 20,
     generations: 100,
+    yearsPerGeneration: 25,
 
     enableMutation: false,
     enableGeneFlow: false,
@@ -66,9 +75,12 @@ const presets = {
   },
 
   altitude: {
+    alleleLabel: "High-altitude-associated allele",
+
     startingAlleleFreq: 0.05,
     populationSize: 500,
     generations: 150,
+    yearsPerGeneration: 25,
 
     enableMutation: false,
     enableGeneFlow: true,
@@ -88,9 +100,12 @@ const presets = {
   },
 
   custom: {
+    alleleLabel: "Allele A",
+
     startingAlleleFreq: 0.5,
     populationSize: 100,
     generations: 100,
+    yearsPerGeneration: 25,
 
     enableMutation: false,
     enableGeneFlow: false,

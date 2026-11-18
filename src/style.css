@@ -675,6 +675,101 @@ button:hover {
   font-variant-numeric: tabular-nums;
 }
 
+/* Results interpretation and evolutionary time */
+.interpretation-panel,
+.time-panel {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.interpretation-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.interpretation-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.interpretation-stats strong {
+  color: var(--accent);
+  font-size: 18px;
+}
+
+.outcome-explanation,
+.event-timing,
+.interpretation-note,
+.time-panel p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.time-panel strong {
+  color: var(--text);
+}
+
+/* Geographic allele frequency section */
+.map-section {
+  max-width: 1250px;
+  margin: 28px auto;
+  padding: 24px;
+
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-sizing: border-box;
+}
+
+/* Map container */
+#worldMap {
+  width: 100%;
+  height: 520px;
+
+  margin-top: 20px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  box-sizing: border-box;
+  z-index: 0;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .map-section {
+    padding: 16px;
+  }
+
+  #worldMap {
+    height: 350px;
+  }
+}
+
+/* Hide Leaflet's default attribution background */
+.leaflet-control-attribution {
+  background: transparent !important;
+  color: var(--muted);
+}
+
+@media (max-width: 650px) {
+  .interpretation-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 850px) {
   .simulation-layout {
     grid-template-columns: 1fr;

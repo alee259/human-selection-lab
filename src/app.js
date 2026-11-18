@@ -29,6 +29,7 @@ const parameterNames = [
   "populationSize",
   "startingAlleleFreq",
   "generations",
+  "yearsPerGeneration",
   "fitnessAA",
   "fitnessAa",
   "fitnessaa",
@@ -44,6 +45,7 @@ const integerParameters = [
   "populationSize",
   "generations",
   "migrationGenerations",
+  "yearsPerGeneration",
 ];
 
 // Update evolutionary force switches
@@ -143,6 +145,79 @@ function updateResultsSummary(allResults) {
   fixationCount.textContent = `Allele Fixed: ${fixed}`;
 }
 
+function updateInterpretation(allResults) {
+  const firstRun = allResults[0];
+  const startingFreq = firstRun[0];
+  const finalFreq = firstRun.at(-1);
+
+  // Calculate the mean final frequency across all runs
+  const finalFrequencies = allResults.map((results) => results.at(-1));
+
+  const meanFinalFreq =
+    finalFrequencies.reduce((sum, freq) => sum + freq, 0) /
+    finalFrequencies.length;
+
+  // Display summary statistics
+  document.getElementById("startingFrequencyResult").textContent =
+    startingFreq.toFixed(3);
+
+  document.getElementById("finalFrequencyResult").textContent =
+    finalFreq.toFixed(3);
+
+  document.getElementById("meanFrequencyResult").textContent =
+    meanFinalFreq.toFixed(3);
+
+  // Describe the highlighted run's numerical outcome
+  const explanation = document.getElementById("outcomeExplanation");
+
+  if (finalFreq === 0) {
+    explanation.textContent =
+      "The tracked allele was lost in the highlighted run.";
+  } else if (finalFreq === 1) {
+    explanation.textContent =
+      "The tracked allele became fixed in the highlighted run.";
+  } else if (finalFreq > startingFreq) {
+    explanation.textContent =
+      "The tracked allele increased in the highlighted run.";
+  } else if (finalFreq < startingFreq) {
+    explanation.textContent =
+      "The tracked allele decreased in the highlighted run.";
+  } else {
+    explanation.textContent =
+      "The tracked allele ended at its starting frequency.";
+  }
+
+  // Find the first generation of loss or fixation
+  const firstEventGeneration = firstRun.findIndex(
+    (freq) => freq === 0 || freq === 1,
+  );
+
+  const eventTiming = document.getElementById("eventTiming");
+
+  if (firstEventGeneration >= 0) {
+    const eventType =
+      firstRun[firstEventGeneration] === 0 ? "loss" : "fixation";
+
+    eventTiming.textContent = `Highlighted run first reached ${eventType} at generation ${firstEventGeneration}.`;
+  } else {
+    eventTiming.textContent =
+      "The highlighted run did not reach loss or fixation.";
+  }
+}
+
+function updateEvolutionaryTime() {
+  const elapsedYears = settings.generations * settings.yearsPerGeneration;
+
+  document.getElementById("generationsResult").textContent =
+    settings.generations;
+
+  document.getElementById("yearsPerGenerationResult").textContent =
+    settings.yearsPerGeneration;
+
+  document.getElementById("elapsedYearsResult").textContent =
+    `${elapsedYears.toLocaleString()} years`;
+}
+
 // Display one or more simulation trajectories
 function displayResults(allResults) {
   // Generation labels: 0, 1, 2, ...
@@ -224,6 +299,8 @@ function displayResults(allResults) {
 
   // Update result counters
   updateResultsSummary(allResults);
+  updateInterpretation(allResults);
+  updateEvolutionaryTime();
 }
 
 // Run one simulation

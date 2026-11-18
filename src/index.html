@@ -7,8 +7,16 @@
     <title>Human Selection Lab</title>
     <link rel="stylesheet" href="style.css" />
 
-    <!-- Chart.js -->
+    <!-- Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+
+    <!-- Leaflet map library -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   </head>
 
   <body>
@@ -82,17 +90,18 @@
         </p>
       </section>
 
-      <!-- Two-Column Simulation Workspace -->
+      <!-- Simulation Workspace -->
       <div class="simulation-layout">
         <!-- LEFT COLUMN: Settings -->
         <section class="settings-panel">
           <p class="eyebrow">SIMULATION SETTINGS</p>
           <h2>Evolutionary Forces</h2>
+
           <p class="settings-description">
             Choose which evolutionary forces affect the population.
           </p>
 
-          <!-- Force Switches -->
+          <!-- Evolutionary Force Switches -->
           <div class="force-controls">
             <label class="force-option">
               <span class="force-text">
@@ -228,7 +237,7 @@
                 >
                   ?
                   <span class="tooltip-text" role="tooltip">
-                    Number of generations simulated. More generations allow
+                    Number of generations simulated. More generations give
                     evolutionary forces more opportunities to change allele
                     frequencies.
                   </span>
@@ -249,6 +258,40 @@
                   max="500"
                   step="1"
                   aria-label="Generations value"
+                />
+              </div>
+
+              <!-- NEW: Years Per Generation -->
+              <div class="parameter-label">
+                <label for="yearsPerGeneration">Years Per Generation</label>
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="Years per generation explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Approximate number of years represented by one generation.
+                    This changes the displayed time scale, not the simulation
+                    mathematics.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="yearsPerGeneration"
+                  min="15"
+                  max="40"
+                  step="1"
+                />
+                <input
+                  type="number"
+                  id="yearsPerGenerationValue"
+                  min="15"
+                  max="40"
+                  step="1"
+                  aria-label="Years per generation value"
                 />
               </div>
             </div>
@@ -544,7 +587,7 @@
           </p>
         </section>
 
-        <!-- RIGHT COLUMN: Chart -->
+        <!-- RIGHT COLUMN: Chart and Results -->
         <section class="chart-panel">
           <div class="panel-header">
             <div>
@@ -560,30 +603,108 @@
 
             <div class="run-controls">
               <button id="runButton">Run Simulation</button>
-
               <button id="runMultipleButton" class="secondary-button">
                 Run 10 Times
               </button>
             </div>
           </div>
 
+          <!-- Chart -->
           <div class="chart-container">
             <canvas id="alleleChart"></canvas>
           </div>
 
-          <!-- Simulation outcome summary -->
+          <!-- Run Summary -->
           <div class="results-summary">
             <span id="runCount">Runs: 0</span>
             <span id="lossCount">Allele Lost: 0</span>
             <span id="fixationCount">Allele Fixed: 0</span>
           </div>
+
+          <!-- NEW: Results Interpretation -->
+          <section class="interpretation-panel">
+            <p class="eyebrow">WHAT HAPPENED?</p>
+
+            <div class="interpretation-stats">
+              <div>
+                <span class="stat-label">Starting Frequency</span>
+                <strong id="startingFrequencyResult">—</strong>
+              </div>
+
+              <div>
+                <span class="stat-label"
+                  >Final Frequency (Highlighted Run)</span
+                >
+                <strong id="finalFrequencyResult">—</strong>
+              </div>
+
+              <div>
+                <span class="stat-label">Mean Final Frequency</span>
+                <strong id="meanFrequencyResult">—</strong>
+              </div>
+            </div>
+
+            <p id="outcomeExplanation" class="outcome-explanation">
+              Run a simulation to see its results.
+            </p>
+
+            <p id="eventTiming" class="event-timing"></p>
+
+            <p class="interpretation-note">
+              Allele loss means frequency 0; fixation means frequency 1. Counts
+              indicate runs that reached either outcome at least once.
+            </p>
+          </section>
+
+          <!-- NEW: Evolutionary Time -->
+          <section class="time-panel">
+            <p class="eyebrow">EVOLUTIONARY TIME</p>
+
+            <p>
+              Generations simulated:
+              <strong id="generationsResult">—</strong>
+            </p>
+
+            <p>
+              Years per generation:
+              <strong id="yearsPerGenerationResult">—</strong>
+            </p>
+
+            <p>
+              Approximate elapsed time:
+              <strong id="elapsedYearsResult">—</strong>
+            </p>
+          </section>
         </section>
       </div>
+
+      <!-- Geographic Allele Frequencies -->
+      <section class="map-section">
+        <div class="map-header">
+          <p class="eyebrow">GLOBAL POPULATION GENETICS</p>
+          <h2>Allele Frequencies Around the World</h2>
+
+          <p class="section-description">
+            Explore how allele frequencies differ between human populations.
+            This map will display observed data from published research, not
+            results generated by the simulation.
+          </p>
+        </div>
+
+        <!-- Interactive Map -->
+        <div id="worldMap"></div>
+
+        <p class="map-note">
+          Population markers and allele-frequency measurements will be added
+          after verifying published datasets.
+        </p>
+      </section>
     </main>
 
     <!-- JavaScript Files -->
     <script src="simulation.js"></script>
     <script src="presets.js"></script>
     <script src="app.js"></script>
+    <script src="map.js"></script>
   </body>
 </html>
