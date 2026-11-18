@@ -1,0 +1,68 @@
+{
+  "id": "epas1",
+  "name": "High-Altitude Adaptation",
+  "variant": "EPAS1 five-motif adaptive haplotype",
+  "trackedAllele": "EPAS1 adaptive five-motif haplotype",
+  "description": "Population frequencies of a defined Tibetan-associated EPAS1 adaptive haplotype.",
+  "observations": [
+    {
+      "population": "Tibetans (TIB)",
+      "region": "Tibetan Plateau",
+      "latitude": 29.65,
+      "longitude": 91.1,
+      "frequency": 0.85,
+      "sampleSize": null,
+      "source": "Ge et al. (2023), Table 1",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10584363/",
+      "notes": "Published frequency of the EPAS1 adaptive five-motif haplotype. Approximate regional marker, not a precise sampling coordinate."
+    },
+    {
+      "population": "Sherpa (SHP)",
+      "region": "Himalayan region, Nepal",
+      "latitude": 27.8,
+      "longitude": 86.7,
+      "frequency": 0.6,
+      "sampleSize": null,
+      "source": "Ge et al. (2023), Table 1",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10584363/",
+      "notes": "Published frequency of the same EPAS1 five-motif haplotype. Approximate regional marker."
+    },
+    {
+      "population": "Deng",
+      "region": "Zayü County, southeastern Tibet",
+      "latitude": 28.7,
+      "longitude": 97.5,
+      "frequency": 0.11,
+      "sampleSize": 54,
+      "source": "Ge et al. (2023), Table 1",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10584363/",
+      "notes": "Deng participants were sampled in Zayü County. Frequency refers to the EPAS1 adaptive five-motif haplotype."
+    },
+    {
+      "population": "Han Chinese (HAN)",
+      "region": "China; approximate reference location",
+      "latitude": 34.3,
+      "longitude": 108.9,
+      "frequency": 0.05,
+      "sampleSize": null,
+      "source": "Ge et al. (2023), Table 1",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10584363/",
+      "notes": "Published comparison frequency for Han Chinese. Map position is a broad geographic reference, not the documented sampling location."
+    }
+  ],
+
+  "history": [
+    {
+      "type": "selection_region",
+      "label": "Tibetan Plateau — High-Altitude Selection",
+      "bounds": [
+        [27.0, 78.0],
+        [37.0, 103.0]
+      ],
+      "period": "Selection occurred over thousands of years",
+      "source": "Huerta-Sánchez et al. (2014)",
+      "sourceUrl": "https://doi.org/10.1038/nature13408",
+      "notes": "Illustrative geographic highlight of the Tibetan Plateau, where high-altitude adaptation involving EPAS1 has been studied. This rectangle is not a published selection boundary or the location where Denisovan-related introgression occurred."
+    }
+  ]
+}

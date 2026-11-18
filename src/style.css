@@ -747,6 +747,404 @@ button:hover {
   z-index: 0;
 }
 
+/* Map controls */
+.map-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.map-dataset-control {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.map-dataset-control label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+#mapDataset {
+  padding: 10px 14px;
+  background: var(--background);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+#mapDataset:focus {
+  outline: 1px solid var(--accent);
+}
+
+.map-origin-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.map-origin-control input {
+  accent-color: var(--accent);
+}
+
+/* Map legend */
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.map-legend > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.legend-dot.observed {
+  background: #a8ffb2;
+}
+
+.legend-dot.origin {
+  border: 2px solid #f5c77a;
+  box-sizing: border-box;
+}
+
+/* Genetic population popups */
+.genetic-popup {
+  min-width: 190px;
+  max-width: 260px;
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.genetic-popup strong {
+  color: var(--accent);
+}
+
+.genetic-popup p {
+  color: var(--muted);
+  margin: 8px 0;
+}
+
+.genetic-popup a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--panel);
+  color: var(--text);
+}
+
+.leaflet-popup-close-button {
+  color: var(--muted) !important;
+}
+
+/* Population comparison panel */
+.comparison-panel {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.comparison-populations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.comparison-populations > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comparison-label {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.comparison-populations strong {
+  color: var(--text);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.comparison-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.comparison-actions button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.comparison-note {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 14px;
+}
+
+/* Comparison results */
+.comparison-results-panel {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.comparison-results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.comparison-result-card {
+  padding: 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.comparison-result-card:first-child {
+  border-top: 3px solid #a8ffb2;
+}
+
+.comparison-result-card:last-child {
+  border-top: 3px solid #f5c77a;
+}
+
+.comparison-result-card h3 {
+  margin: 0 0 14px;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.comparison-result-card p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.comparison-result-card strong {
+  color: var(--text);
+}
+
+/* Ensure hidden panels actually disappear */
+.interpretation-panel[hidden],
+.comparison-results-panel[hidden],
+.results-summary[hidden] {
+  display: none !important;
+}
+
+/* Frequency legend */
+.frequency-legend {
+  margin-top: 18px;
+  padding: 16px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.frequency-legend-title {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.frequency-legend-items {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 14px;
+}
+
+.frequency-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.frequency-circle {
+  display: inline-block;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(168, 255, 178, 0.55);
+  border: 2px solid #a8ffb2;
+}
+
+.frequency-circle.small {
+  width: 13px;
+  height: 13px;
+}
+
+.frequency-circle.medium {
+  width: 20px;
+  height: 20px;
+}
+
+.frequency-circle.large {
+  width: 30px;
+  height: 30px;
+}
+
+.frequency-legend-note {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 12px 0 0;
+}
+
+/* Scientific context panel */
+.map-context-panel {
+  margin-top: 20px;
+  padding: 24px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.map-context-panel h3 {
+  color: var(--text);
+  font-size: 18px;
+  margin: 12px 0 20px;
+}
+
+.map-context-panel h4 {
+  color: var(--accent);
+  font-size: 13px;
+  margin: 18px 0 8px;
+}
+
+.map-context-panel p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  max-width: 900px;
+}
+
+.map-context-panel a {
+  display: inline-block;
+  color: var(--accent);
+  font-size: 13px;
+  margin-top: 14px;
+  text-decoration: underline;
+}
+
+/* Historical evidence notice */
+.map-history-notice {
+  margin: 12px 0;
+  padding: 12px 16px;
+
+  background: var(--background);
+  border-left: 3px solid #f5c77a;
+  border-radius: 6px;
+
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.map-history-notice[hidden] {
+  display: none;
+}
+
+/* =========================================
+   LEAFLET POPUP — DARK THEME
+   ========================================= */
+
+/* Popup background */
+#worldMap .leaflet-popup-content-wrapper,
+#worldMap .leaflet-popup-tip {
+  background: #111821;
+  color: #e8edf3;
+}
+
+/* Popup container */
+#worldMap .leaflet-popup-content-wrapper {
+  border: 1px solid #24303d;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Main popup text */
+#worldMap .genetic-popup {
+  color: #e8edf3;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Population name and allele */
+#worldMap .genetic-popup strong {
+  color: #a8ffb2;
+}
+
+/* Description and metadata */
+#worldMap .genetic-popup p {
+  color: #aab7c8;
+  margin: 10px 0;
+}
+
+/* Scientific source links */
+#worldMap .genetic-popup a {
+  color: #a8ffb2;
+  text-decoration: underline;
+}
+
+#worldMap .genetic-popup a:hover {
+  color: #d4ffda;
+}
+
+/* Close button */
+#worldMap .leaflet-popup-close-button {
+  color: #8795a7 !important;
+}
+
+#worldMap .leaflet-popup-close-button:hover {
+  color: #e8edf3 !important;
+}
+
+@media (max-width: 650px) {
+  .comparison-results-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .comparison-populations {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Responsive */
 @media (max-width: 700px) {
   .map-section {

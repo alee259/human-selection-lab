@@ -1,0 +1,80 @@
+{
+  "id": "lactase",
+  "name": "Lactase Persistence",
+  "variant": "rs4988235",
+  "trackedAllele": "-13910*T",
+  "description": "European-associated lactase persistence variant.",
+
+  "observations": [
+    {
+      "population": "Utah residents with Northern/Western European ancestry (CEU)",
+      "region": "Utah, United States",
+      "latitude": 40.76,
+      "longitude": -111.89,
+      "frequency": 0.737,
+      "sampleSize": null,
+      "source": "1000 Genomes, reported in Veeramah et al. supplementary Table S21",
+      "sourceUrl": "https://discovery.ucl.ac.uk/id/eprint/10045365/8/Veeramah_Population_genomic_analysis_Suppl.pdf",
+      "notes": "Marker represents the Utah sampling location, not the geographic origin of the participants' European ancestry."
+    },
+    {
+      "population": "British in England and Scotland (GBR)",
+      "region": "United Kingdom",
+      "latitude": 54.5,
+      "longitude": -3.0,
+      "frequency": 0.72,
+      "sampleSize": null,
+      "source": "1000 Genomes, reported in Veeramah et al. supplementary Table S21",
+      "sourceUrl": "https://discovery.ucl.ac.uk/id/eprint/10045365/8/Veeramah_Population_genomic_analysis_Suppl.pdf",
+      "notes": "Population sample, not a UK-wide estimate."
+    },
+    {
+      "population": "Finnish in Finland (FIN)",
+      "region": "Finland",
+      "latitude": 61.5,
+      "longitude": 24.0,
+      "frequency": 0.591,
+      "sampleSize": null,
+      "source": "1000 Genomes, reported in Veeramah et al. supplementary Table S21",
+      "sourceUrl": "https://discovery.ucl.ac.uk/id/eprint/10045365/8/Veeramah_Population_genomic_analysis_Suppl.pdf",
+      "notes": "Approximate geographic placement of the sampled population."
+    },
+    {
+      "population": "Iberian populations in Spain (IBS)",
+      "region": "Spain",
+      "latitude": 40.4,
+      "longitude": -3.7,
+      "frequency": 0.458,
+      "sampleSize": null,
+      "source": "1000 Genomes, reported in Veeramah et al. supplementary Table S21",
+      "sourceUrl": "https://discovery.ucl.ac.uk/id/eprint/10045365/8/Veeramah_Population_genomic_analysis_Suppl.pdf",
+      "notes": "Approximate marker for the Iberian reference sample, not a Spain-wide estimate."
+    },
+    {
+      "population": "Toscani in Italy (TSI)",
+      "region": "Tuscany, Italy",
+      "latitude": 43.5,
+      "longitude": 11.0,
+      "frequency": 0.089,
+      "sampleSize": null,
+      "source": "1000 Genomes, reported in Veeramah et al. supplementary Table S21",
+      "sourceUrl": "https://discovery.ucl.ac.uk/id/eprint/10045365/8/Veeramah_Population_genomic_analysis_Suppl.pdf",
+      "notes": "Approximate marker for the Tuscan sample, not an Italy-wide estimate."
+    }
+  ],
+
+  "history": [
+    {
+      "type": "selection_region",
+      "label": "Modeled Early Selection Region",
+      "bounds": [
+        [42.0, 12.0],
+        [51.0, 24.0]
+      ],
+      "period": "Approximately 7,500 years ago",
+      "source": "Itan et al. (2009)",
+      "sourceUrl": "https://doi.org/10.1371/journal.pcbi.1000491",
+      "notes": "Broad illustrative region representing a modeled area of early selection for the European lactase-persistence variant. This is not a precise mutation origin or a published confidence boundary."
+    }
+  ]
+}

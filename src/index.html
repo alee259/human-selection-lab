@@ -592,8 +592,7 @@
           <div class="panel-header">
             <div>
               <p class="eyebrow">SIMULATION RESULTS</p>
-              <h2>Allele A Frequency Over Time</h2>
-
+              <h2 id="chartTitle">Allele A Frequency Over Time</h2>
               <p class="chart-description">
                 Allele frequency is the proportion of all allele copies that are
                 A. For example, 0.7 means 70% A and 30% a. A is not necessarily
@@ -628,19 +627,19 @@
             <div class="interpretation-stats">
               <div>
                 <span class="stat-label">Starting Frequency</span>
-                <strong id="startingFrequencyResult">—</strong>
+                <strong id="startingFrequencyResult">-</strong>
               </div>
 
               <div>
                 <span class="stat-label"
                   >Final Frequency (Highlighted Run)</span
                 >
-                <strong id="finalFrequencyResult">—</strong>
+                <strong id="finalFrequencyResult">-</strong>
               </div>
 
               <div>
                 <span class="stat-label">Mean Final Frequency</span>
-                <strong id="meanFrequencyResult">—</strong>
+                <strong id="meanFrequencyResult">-</strong>
               </div>
             </div>
 
@@ -656,23 +655,73 @@
             </p>
           </section>
 
+          <!-- Population Comparison Results -->
+          <section
+            id="comparisonResults"
+            class="comparison-results-panel"
+            hidden
+          >
+            <p class="eyebrow">POPULATION COMPARISON</p>
+
+            <div class="comparison-results-grid">
+              <div class="comparison-result-card">
+                <h3 id="comparisonResultName1">Population 1</h3>
+
+                <p>
+                  Starting Frequency:
+                  <strong id="comparisonStart1">—</strong>
+                </p>
+
+                <p>
+                  Final Frequency:
+                  <strong id="comparisonFinal1">—</strong>
+                </p>
+
+                <p id="comparisonOutcome1"></p>
+              </div>
+
+              <div class="comparison-result-card">
+                <h3 id="comparisonResultName2">Population 2</h3>
+
+                <p>
+                  Starting Frequency:
+                  <strong id="comparisonStart2">—</strong>
+                </p>
+
+                <p>
+                  Final Frequency:
+                  <strong id="comparisonFinal2">—</strong>
+                </p>
+
+                <p id="comparisonOutcome2"></p>
+              </div>
+            </div>
+
+            <p class="comparison-note">
+              These are independent hypothetical simulations using identical
+              evolutionary parameters except for starting allele frequency. They
+              do not reconstruct historical population trajectories or model
+              migration between the two selected populations.
+            </p>
+          </section>
+
           <!-- NEW: Evolutionary Time -->
           <section class="time-panel">
             <p class="eyebrow">EVOLUTIONARY TIME</p>
 
             <p>
               Generations simulated:
-              <strong id="generationsResult">—</strong>
+              <strong id="generationsResult">-</strong>
             </p>
 
             <p>
               Years per generation:
-              <strong id="yearsPerGenerationResult">—</strong>
+              <strong id="yearsPerGenerationResult">-</strong>
             </p>
 
             <p>
               Approximate elapsed time:
-              <strong id="elapsedYearsResult">—</strong>
+              <strong id="elapsedYearsResult">-</strong>
             </p>
           </section>
         </section>
@@ -691,13 +740,132 @@
           </p>
         </div>
 
+        <!-- Map controls -->
+        <div class="map-controls">
+          <div class="map-dataset-control">
+            <label for="mapDataset">Genetic Variant</label>
+
+            <select id="mapDataset">
+              <option value="hbs">HbS - Sickle Cell</option>
+              <option value="lactase">Lactase Persistence - rs4988235</option>
+              <option value="epas1">EPAS1 - High-Altitude Adaptation</option>
+            </select>
+          </div>
+
+          <label class="map-origin-control">
+            <input type="checkbox" id="showOrigins" checked />
+            Show Evolutionary History
+          </label>
+        </div>
+
+        <!-- Map legend -->
+        <div class="map-legend">
+          <span>
+            <span class="legend-dot observed"></span>
+            Observed Allele Frequency
+          </span>
+
+          <span>
+            <span class="legend-dot origin"></span>
+            Historical evidence / modeled selection region
+          </span>
+        </div>
+
+        <!-- Historical Evidence Notice -->
+        <p id="mapHistoryNotice" class="map-history-notice" hidden></p>
+
+        <!-- Frequency scale (sizes correspond to the marker radius formula) -->
+        <div
+          class="frequency-legend"
+          aria-label="Allele frequency circle size scale"
+        >
+          <strong class="frequency-legend-title"
+            >Circle size = observed frequency</strong
+          >
+          <div class="frequency-legend-items">
+            <span class="frequency-legend-item"
+              ><span
+                class="frequency-circle"
+                style="width: 17px; height: 17px"
+              ></span
+              >5%</span
+            >
+            <span class="frequency-legend-item"
+              ><span
+                class="frequency-circle"
+                style="width: 26px; height: 26px"
+              ></span
+              >25%</span
+            >
+            <span class="frequency-legend-item"
+              ><span
+                class="frequency-circle"
+                style="width: 38px; height: 38px"
+              ></span
+              >75%</span
+            >
+          </div>
+          <p class="frequency-legend-note">
+            Circle size reflects allele or haplotype frequency, not population
+            size. Markers indicate approximate sample locations.
+          </p>
+        </div>
+
+        <!-- Population Comparison Controls -->
+        <div class="comparison-panel">
+          <div class="comparison-populations">
+            <div>
+              <span class="comparison-label">Population 1</span>
+              <strong id="comparisonPopulation1">Not selected</strong>
+            </div>
+
+            <div>
+              <span class="comparison-label">Population 2</span>
+              <strong id="comparisonPopulation2">Not selected</strong>
+            </div>
+          </div>
+
+          <div class="comparison-actions">
+            <button id="compareButton" disabled>Compare in Simulator</button>
+
+            <button id="clearComparisonButton" class="secondary-button">
+              Clear Selection
+            </button>
+          </div>
+
+          <p class="comparison-note">
+            Select two green population markers from the same dataset. The
+            simulator will compare hypothetical trajectories using their
+            observed allele frequencies as starting conditions.
+          </p>
+        </div>
+
         <!-- Interactive Map -->
         <div id="worldMap"></div>
 
         <p class="map-note">
-          Population markers and allele-frequency measurements will be added
-          after verifying published datasets.
+          Green markers show published sample frequencies; gold regions indicate
+          historical interpretations where available. These are not national
+          averages or historical reconstructions.
         </p>
+        <!-- Dataset-specific scientific context -->
+        <section class="map-context-panel" aria-labelledby="mapContextTitle">
+          <p class="eyebrow">UNDERSTANDING THE DATA</p>
+          <h3 id="mapContextTitle">About This Dataset</h3>
+          <h4>Why These Populations?</h4>
+          <p id="mapPopulationExplanation"></p>
+          <h4>Evolutionary History</h4>
+          <p id="mapHistoryExplanation"></p>
+          <h4>Important Limitations</h4>
+          <p id="mapLimitations"></p>
+          <a
+            id="mapResearchLink"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            >View Scientific Research</a
+          >
+        </section>
       </section>
     </main>
 
@@ -705,6 +873,7 @@
     <script src="simulation.js"></script>
     <script src="presets.js"></script>
     <script src="app.js"></script>
+    <script src="map-content.js"></script>
     <script src="map.js"></script>
   </body>
 </html>

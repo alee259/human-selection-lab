@@ -1,0 +1,65 @@
+{
+  "id": "hbs",
+  "name": "Sickle Cell",
+  "variant": "HBB rs334",
+  "trackedAllele": "HbS",
+  "description": "HbS allele frequencies calculated from published 1000 Genomes carrier counts.",
+  "observations": [
+    {
+      "population": "Esan in Nigeria (ESN)",
+      "region": "Nigeria",
+      "latitude": 6.3,
+      "longitude": 5.6,
+      "frequency": 0.121212,
+      "sampleSize": 99,
+      "source": "Shriner and Rotimi (2018), Table 2; 1000 Genomes",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5985360/",
+      "notes": "24 HbS carriers among 99 diploid individuals; no HbS homozygotes reported. Frequency calculated as 24 / 198. Approximate geographic marker."
+    },
+    {
+      "population": "Yoruba in Ibadan, Nigeria (YRI)",
+      "region": "Ibadan, Nigeria",
+      "latitude": 7.38,
+      "longitude": 3.9,
+      "frequency": 0.138889,
+      "sampleSize": 108,
+      "source": "Shriner and Rotimi (2018), Table 2; 1000 Genomes",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5985360/",
+      "notes": "30 HbS carriers among 108 diploid individuals; no HbS homozygotes reported. Frequency calculated as 30 / 216."
+    },
+    {
+      "population": "Gambian in Western Divisions (GWD)",
+      "region": "The Gambia",
+      "latitude": 13.4,
+      "longitude": -16.4,
+      "frequency": 0.115044,
+      "sampleSize": 113,
+      "source": "Shriner and Rotimi (2018), Table 2; 1000 Genomes",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5985360/",
+      "notes": "26 HbS carriers among 113 diploid individuals; no HbS homozygotes reported. Frequency calculated as 26 / 226. Approximate geographic marker."
+    },
+    {
+      "population": "Luhya in Webuye, Kenya (LWK)",
+      "region": "Webuye, Kenya",
+      "latitude": 0.61,
+      "longitude": 34.77,
+      "frequency": 0.10101,
+      "sampleSize": 99,
+      "source": "Shriner and Rotimi (2018), Table 2; 1000 Genomes",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5985360/",
+      "notes": "20 HbS carriers among 99 diploid individuals; no HbS homozygotes reported. Frequency calculated as 20 / 198."
+    },
+    {
+      "population": "Mende in Sierra Leone (MSL)",
+      "region": "Sierra Leone",
+      "latitude": 8.0,
+      "longitude": -11.7,
+      "frequency": 0.123529,
+      "sampleSize": 85,
+      "source": "Shriner and Rotimi (2018), Table 2; 1000 Genomes",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5985360/",
+      "notes": "21 HbS carriers among 85 diploid individuals; no HbS homozygotes reported. Frequency calculated as 21 / 170. Approximate geographic marker."
+    }
+  ],
+  "history": []
+}
