@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Human Selection Lab</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  </head>
+
+  <body>
+    <!-- Website Header -->
+    <header class="site-header">
+      <p class="eyebrow">POPULATION GENETICS SIMULATOR</p>
+      <h1>Human Selection <span>Lab</span></h1>
+      <p class="subtitle">
+        Explore how evolutionary forces shape human populations.
+      </p>
+    </header>
+
+    <main>
+      <!-- Scenario Selection -->
+      <section class="scenario-section">
+        <div class="section-heading">
+          <p class="eyebrow">EXPLORE EVOLUTION</p>
+          <h2>Choose a Scenario</h2>
+          <p class="section-description">
+            Explore human evolution through biological examples or create your
+            own experiment.
+          </p>
+        </div>
+
+        <div class="scenario-grid">
+          <button class="scenario-card selected" data-scenario="sickleCell">
+            <span class="scenario-category">NATURAL SELECTION</span>
+            <span class="scenario-name">Sickle Cell & Malaria</span>
+            <span class="scenario-description">
+              Explore how malaria influences the frequency of the sickle-cell
+              allele.
+            </span>
+          </button>
+
+          <button class="scenario-card" data-scenario="lactase">
+            <span class="scenario-category">NATURAL SELECTION</span>
+            <span class="scenario-name">Lactase Persistence</span>
+            <span class="scenario-description">
+              Explore how dairying can influence lactase persistence.
+            </span>
+          </button>
+
+          <button class="scenario-card" data-scenario="founder">
+            <span class="scenario-category">GENETIC DRIFT</span>
+            <span class="scenario-name">Founder Effect</span>
+            <span class="scenario-description">
+              See how chance affects allele frequencies in small populations.
+            </span>
+          </button>
+
+          <button class="scenario-card" data-scenario="altitude">
+            <span class="scenario-category">GENE FLOW</span>
+            <span class="scenario-name">High-Altitude Adaptation</span>
+            <span class="scenario-description">
+              Explore gene flow and adaptation in Tibetan populations.
+            </span>
+          </button>
+
+          <button class="scenario-card" data-scenario="custom">
+            <span class="scenario-category">CUSTOM EXPERIMENT</span>
+            <span class="scenario-name">Build Your Own</span>
+            <span class="scenario-description">
+              Combine evolutionary forces and adjust their effects.
+            </span>
+          </button>
+        </div>
+
+        <p class="model-disclaimer">
+          Simulation parameters are illustrative, not measured historical
+          values. Results demonstrate simplified evolutionary mechanisms.
+        </p>
+      </section>
+
+      <!-- Two-Column Simulation Workspace -->
+      <div class="simulation-layout">
+        <!-- LEFT COLUMN: Settings -->
+        <section class="settings-panel">
+          <p class="eyebrow">SIMULATION SETTINGS</p>
+          <h2>Evolutionary Forces</h2>
+          <p class="settings-description">
+            Choose which evolutionary forces affect the population.
+          </p>
+
+          <!-- Force Switches -->
+          <div class="force-controls">
+            <label class="force-option">
+              <span class="force-text">
+                <strong>Mutation</strong>
+                <small>
+                  Changes alleles between A and a. Can introduce previously
+                  absent alleles.
+                </small>
+              </span>
+              <input type="checkbox" id="enableMutation" class="switch-input" />
+              <span class="switch-slider"></span>
+            </label>
+
+            <label class="force-option">
+              <span class="force-text">
+                <strong>Gene Flow</strong>
+                <small>
+                  Migration mixes alleles between populations, changing their
+                  frequencies.
+                </small>
+              </span>
+              <input type="checkbox" id="enableGeneFlow" class="switch-input" />
+              <span class="switch-slider"></span>
+            </label>
+
+            <label class="force-option">
+              <span class="force-text">
+                <strong>Natural Selection</strong>
+                <small>
+                  Genotypes with higher fitness contribute proportionally more
+                  alleles to the next generation.
+                </small>
+              </span>
+              <input
+                type="checkbox"
+                id="enableSelection"
+                class="switch-input"
+              />
+              <span class="switch-slider"></span>
+            </label>
+
+            <label class="force-option">
+              <span class="force-text">
+                <strong>Genetic Drift</strong>
+                <small>
+                  Random sampling changes allele frequencies. Effects are
+                  stronger in small populations.
+                </small>
+              </span>
+              <input type="checkbox" id="enableDrift" class="switch-input" />
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+
+          <!-- Population Dropdown -->
+          <details class="parameter-group" open>
+            <summary>Population</summary>
+
+            <div class="parameter-content">
+              <div class="parameter-label">
+                <label for="populationSize">Population Size (N)</label>
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="Population size explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Number of diploid individuals in the population. Smaller
+                    populations experience stronger genetic drift.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="populationSize"
+                  min="10"
+                  max="2000"
+                  step="1"
+                />
+                <input
+                  type="number"
+                  id="populationSizeValue"
+                  min="10"
+                  max="2000"
+                  step="1"
+                  aria-label="Population size value"
+                />
+              </div>
+
+              <div class="parameter-label">
+                <label for="startingAlleleFreq"
+                  >Starting Allele Frequency</label
+                >
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="Starting allele frequency explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Initial proportion of allele A in the population. For
+                    example, 0.2 means 20% A and 80% a. A is not necessarily the
+                    dominant allele.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="startingAlleleFreq"
+                  min="0"
+                  max="1"
+                  step="0.001"
+                />
+                <input
+                  type="number"
+                  id="startingAlleleFreqValue"
+                  min="0"
+                  max="1"
+                  step="0.001"
+                  aria-label="Starting allele frequency value"
+                />
+              </div>
+
+              <div class="parameter-label">
+                <label for="generations">Generations</label>
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="Generations explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Number of generations simulated. More generations allow
+                    evolutionary forces more opportunities to change allele
+                    frequencies.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="generations"
+                  min="1"
+                  max="500"
+                  step="1"
+                />
+                <input
+                  type="number"
+                  id="generationsValue"
+                  min="1"
+                  max="500"
+                  step="1"
+                  aria-label="Generations value"
+                />
+              </div>
+            </div>
+          </details>
+
+          <!-- Natural Selection Dropdown -->
+          <details class="parameter-group" id="selectionParameters">
+            <summary>Natural Selection</summary>
+
+            <div class="parameter-content">
+              <div class="parameter-label">
+                <label for="fitnessAA">AA Fitness</label>
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="AA fitness explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Relative reproductive success of individuals with two copies
+                    of allele A.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="fitnessAA"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                />
+                <input
+                  type="number"
+                  id="fitnessAAValue"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  aria-label="AA fitness value"
+                />
+              </div>
+
+              <div class="parameter-label">
+                <label for="fitnessAa">Aa Fitness</label>
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="Aa fitness explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Relative reproductive success of heterozygous individuals
+                    carrying one A and one a allele.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="fitnessAa"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                />
+                <input
+                  type="number"
+                  id="fitnessAaValue"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  aria-label="Aa fitness value"
+                />
+              </div>
+
+              <div class="parameter-label">
+                <label for="fitnessaa">aa Fitness</label>
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="aa fitness explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Relative reproductive success of individuals with two copies
+                    of allele a.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="fitnessaa"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                />
+                <input
+                  type="number"
+                  id="fitnessaaValue"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  aria-label="aa fitness value"
+                />
+              </div>
+            </div>
+          </details>
+
+          <!-- Mutation Dropdown -->
+          <details class="parameter-group" id="mutationParameters">
+            <summary>Mutation</summary>
+
+            <div class="parameter-content">
+              <div class="parameter-label">
+                <label for="forwardMutationRate">Mutation a → A</label>
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="Forward mutation explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Probability that an a allele mutates into A during one
+                    generation.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="forwardMutationRate"
+                  min="0"
+                  max="0.1"
+                  step="0.001"
+                />
+                <input
+                  type="number"
+                  id="forwardMutationRateValue"
+                  min="0"
+                  max="0.1"
+                  step="0.001"
+                  aria-label="Forward mutation rate value"
+                />
+              </div>
+
+              <div class="parameter-label">
+                <label for="reverseMutationRate">Mutation A → a</label>
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="Reverse mutation explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Probability that an A allele mutates into a during one
+                    generation.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="reverseMutationRate"
+                  min="0"
+                  max="0.1"
+                  step="0.001"
+                />
+                <input
+                  type="number"
+                  id="reverseMutationRateValue"
+                  min="0"
+                  max="0.1"
+                  step="0.001"
+                  aria-label="Reverse mutation rate value"
+                />
+              </div>
+            </div>
+          </details>
+
+          <!-- Gene Flow Dropdown -->
+          <details class="parameter-group" id="geneFlowParameters">
+            <summary>Gene Flow</summary>
+
+            <div class="parameter-content">
+              <div class="parameter-label">
+                <label for="migrationRate">Migration Rate</label>
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="Migration rate explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Fraction of the receiving population's gene pool contributed
+                    by migrants each generation. For example, 0.1 represents
+                    10%.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="migrationRate"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                />
+                <input
+                  type="number"
+                  id="migrationRateValue"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  aria-label="Migration rate value"
+                />
+              </div>
+
+              <div class="parameter-label">
+                <label for="sourceAlleleFreq">Source Allele Frequency</label>
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="Source allele frequency explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Frequency of allele A in the population supplying migrants.
+                    Migration can raise or lower the receiving population's
+                    frequency.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="sourceAlleleFreq"
+                  min="0"
+                  max="1"
+                  step="0.001"
+                />
+                <input
+                  type="number"
+                  id="sourceAlleleFreqValue"
+                  min="0"
+                  max="1"
+                  step="0.001"
+                  aria-label="Source allele frequency value"
+                />
+              </div>
+
+              <div class="parameter-label">
+                <label for="migrationGenerations">Migration Duration</label>
+                <span
+                  class="tooltip"
+                  tabindex="0"
+                  aria-label="Migration duration explanation"
+                >
+                  ?
+                  <span class="tooltip-text" role="tooltip">
+                    Number of initial generations during which migration occurs.
+                    For example, 10 means migration acts in generations 1
+                    through 10.
+                  </span>
+                </span>
+              </div>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="migrationGenerations"
+                  min="0"
+                  max="500"
+                  step="1"
+                />
+                <input
+                  type="number"
+                  id="migrationGenerationsValue"
+                  min="0"
+                  max="500"
+                  step="1"
+                  aria-label="Migration duration value"
+                />
+              </div>
+            </div>
+          </details>
+
+          <!-- Reset Button -->
+          <button id="resetButton" class="reset-button">Reset to Preset</button>
+
+          <p class="settings-note">
+            Each generation applies enabled forces in this order: Mutation →
+            Gene Flow → Selection → Drift. This order is a modeling assumption
+            and can affect the results.
+          </p>
+        </section>
+
+        <!-- RIGHT COLUMN: Chart -->
+        <section class="chart-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">SIMULATION RESULTS</p>
+              <h2>Allele A Frequency Over Time</h2>
+
+              <p class="chart-description">
+                Allele frequency is the proportion of all allele copies that are
+                A. For example, 0.7 means 70% A and 30% a. A is not necessarily
+                the dominant allele.
+              </p>
+            </div>
+
+            <div class="run-controls">
+              <button id="runButton">Run Simulation</button>
+
+              <button id="runMultipleButton" class="secondary-button">
+                Run 10 Times
+              </button>
+            </div>
+          </div>
+
+          <div class="chart-container">
+            <canvas id="alleleChart"></canvas>
+          </div>
+
+          <!-- Simulation outcome summary -->
+          <div class="results-summary">
+            <span id="runCount">Runs: 0</span>
+            <span id="lossCount">Allele Lost: 0</span>
+            <span id="fixationCount">Allele Fixed: 0</span>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- JavaScript Files -->
+    <script src="simulation.js"></script>
+    <script src="presets.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
