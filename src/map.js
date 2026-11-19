@@ -32,6 +32,14 @@ const comparisonPopulation1 = document.getElementById("comparisonPopulation1");
 
 const comparisonPopulation2 = document.getElementById("comparisonPopulation2");
 
+// Explicit panes guarantee markers stay clickable regardless of fetch order.
+worldMap.createPane("countries");
+worldMap.getPane("countries").style.zIndex = "400";
+worldMap.createPane("history");
+worldMap.getPane("history").style.zIndex = "410";
+worldMap.createPane("populations");
+worldMap.getPane("populations").style.zIndex = "420";
+
 // Independent map layers
 const frequencyLayer = L.layerGroup().addTo(worldMap);
 const originLayer = L.layerGroup().addTo(worldMap);
@@ -97,6 +105,7 @@ fetch("data/world.geojson")
   })
   .then((worldData) => {
     const countries = L.geoJSON(worldData, {
+      pane: "countries",
       // Exclude Antarctica
       filter: (feature) => {
         return feature.properties?.ADMIN !== "Antarctica";
@@ -138,8 +147,6 @@ fetch("data/world.geojson")
       animate: false,
     });
 
-    // Keep population markers above country boundaries
-    frequencyLayer.bringToFront?.();
 
     console.log(
       "World map loaded:",
@@ -298,6 +305,7 @@ function addFrequencyMarker(observation, variant) {
   const radius = 5 + 16 * Math.sqrt(frequency);
 
   const marker = L.circleMarker([latitude, longitude], {
+    pane: "populations",
     radius,
     color: "#a8ffb2",
     weight: 2,
@@ -358,6 +366,7 @@ function addHistoryMarker(record) {
   }
 
   const region = L.rectangle(record.bounds, {
+    pane: "history",
     color: "#f5c77a",
     weight: 2,
     fillColor: "#f5c77a",
@@ -396,6 +405,7 @@ async function updateMapDataset() {
   const requestId = ++currentRequest;
 
   // Clear previous dataset
+  showOrigins.disabled = true; // Re-enabled only if annotations exist.
   frequencyLayer.clearLayers();
   originLayer.clearLayers();
 
@@ -423,6 +433,9 @@ async function updateMapDataset() {
       addHistoryMarker(record);
     });
 
+    showOrigins.disabled = data.history.length === 0;
+    updateOriginVisibility();
+
     // Explain when no geographic historical annotations exist
     const historyNotice = document.getElementById("mapHistoryNotice");
 
@@ -447,6 +460,7 @@ async function updateMapDataset() {
     );
   } catch (error) {
     if (requestId === currentRequest) {
+      showOrigins.disabled = true;
       console.error("Dataset loading error:", error);
     }
   }
@@ -501,6 +515,14 @@ compareButton.addEventListener("click", () => {
 
 // Clear selected populations
 clearComparisonButton.addEventListener("click", clearPopulationSelection);
+
+// Keep legend circles proportional to the same radius formula as markers.
+document.querySelectorAll(".frequency-circle[data-frequency]").forEach((circle) => {
+  const frequency = Number(circle.dataset.frequency);
+  const diameter = 2 * (5 + 16 * Math.sqrt(frequency));
+  circle.style.width = `${diameter}px`;
+  circle.style.height = `${diameter}px`;
+});
 
 // ============================================================
 // 13. INITIALIZATION

@@ -1133,6 +1133,89 @@ button:hover {
   color: #e8edf3 !important;
 }
 
+/* =========================================
+   EDUCATIONAL SECTION
+   ========================================= */
+
+.education-section {
+  margin: 28px 0;
+  padding: 24px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.education-panel {
+  margin-top: 12px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.education-panel summary {
+  padding: 18px 20px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.education-panel summary:hover {
+  color: var(--accent);
+}
+
+.education-content {
+  padding: 4px 20px 20px;
+}
+
+.education-content h3 {
+  color: var(--accent);
+  font-size: 18px;
+}
+
+.education-content h4 {
+  color: var(--text);
+  font-size: 13px;
+  margin: 20px 0 8px;
+}
+
+.education-content p,
+.education-content li {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.education-content a {
+  color: var(--accent);
+}
+
+/* Educational equations */
+.education-content .equation {
+  margin: 14px 0;
+  padding: 16px 20px;
+
+  background: #0b1017;
+  border: 1px solid #344454;
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+
+  color: var(--accent);
+  font-family: "Cambria Math", Georgia, serif;
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.education-content h4 {
+  margin-top: 24px;
+}
+
+.education-content p {
+  line-height: 1.75;
+}
+
 @media (max-width: 650px) {
   .comparison-results-grid {
     grid-template-columns: 1fr;
@@ -1192,4 +1275,16 @@ button:hover {
   .scenario-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Comparison mode exit button and history toggle */
+#exitComparisonButton[hidden] {
+  display: none !important;
+}
+.map-origin-control:has(input:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.map-origin-control input:disabled {
+  cursor: not-allowed;
 }

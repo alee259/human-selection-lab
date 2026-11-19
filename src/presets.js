@@ -75,7 +75,7 @@ const presets = {
   },
 
   altitude: {
-    alleleLabel: "High-altitude-associated allele",
+    alleleLabel: "EPAS1 adaptive haplotype",
 
     startingAlleleFreq: 0.05,
     populationSize: 500,

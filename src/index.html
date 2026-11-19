@@ -602,6 +602,9 @@
 
             <div class="run-controls">
               <button id="runButton">Run Simulation</button>
+              <button id="exitComparisonButton" class="secondary-button" hidden>
+                Exit Comparison
+              </button>
               <button id="runMultipleButton" class="secondary-button">
                 Run 10 Times
               </button>
@@ -727,6 +730,295 @@
         </section>
       </div>
 
+      <!-- =========================================
+     LEARN THE BIOLOGY
+     ========================================= -->
+
+      <section class="education-section">
+        <div class="section-heading">
+          <p class="eyebrow">LEARN THE BIOLOGY</p>
+          <h2>Understanding Human Evolution</h2>
+          <p class="section-description">
+            Explore the biological mechanisms behind each scenario and how the
+            simulation models evolution.
+          </p>
+        </div>
+
+        <!-- Scenario Background -->
+        <details class="education-panel" open>
+          <summary>Scenario Background</summary>
+
+          <div class="education-content">
+            <h3 id="educationTitle"></h3>
+
+            <h4>Biological Background</h4>
+            <p id="educationBackground"></p>
+
+            <h4>Evolutionary Mechanism</h4>
+            <p id="educationMechanism"></p>
+
+            <h4>Expected Model Behavior</h4>
+            <p id="educationPrediction"></p>
+
+            <h4>Important Limitations</h4>
+            <p id="educationCaveat"></p>
+
+            <h4>Scientific References</h4>
+            <ul id="educationSources"></ul>
+          </div>
+        </details>
+
+        <!-- Evolutionary Forces -->
+
+        <!-- Evolutionary Forces and Equations -->
+        <details class="education-panel">
+          <summary>How the Evolutionary Forces Work</summary>
+
+          <div class="education-content">
+            <p>
+              This simulator tracks the frequency of allele A (p) across
+              generations. The frequency of allele a is q = 1 - p.
+            </p>
+
+            <p>
+              Each enabled evolutionary force modifies the allele frequency
+              before the next generation is recorded.
+            </p>
+
+            <h4>1. Mutation</h4>
+            <p>
+              Mutation changes one allele into another. Our model allows
+              mutation in both directions.
+            </p>
+
+            <div class="equation">p' = p(1 - v) + (1 - p)u</div>
+
+            <p>
+              p = current frequency of allele A<br />
+              u = mutation rate from a to A<br />
+              v = mutation rate from A to a
+            </p>
+
+            <p>
+              Mutation can introduce an allele that was previously absent from
+              the population.
+            </p>
+
+            <h4>2. Gene Flow</h4>
+            <p>
+              Gene flow changes allele frequencies when migrants contribute
+              genetic material to a receiving population.
+            </p>
+
+            <div class="equation">p' = (1 - m)p + mpₛ</div>
+
+            <p>
+              m = fraction of the receiving gene pool contributed by migrants<br />
+              pₛ = allele A frequency in the source population
+            </p>
+
+            <p>
+              Gene flow moves the receiving population's allele frequency toward
+              the source population's frequency. In our model, migration acts
+              for a user-defined number of initial generations.
+            </p>
+
+            <h4>3. Natural Selection</h4>
+            <p>
+              Natural selection changes allele frequencies when genotypes have
+              different relative fitness values.
+            </p>
+
+            <p>
+              Before selection, the model assumes Hardy-Weinberg genotype
+              proportions:
+            </p>
+
+            <div class="equation">
+              AA = p²
+              <br />
+              Aa = 2pq
+              <br />
+              aa = q²
+            </div>
+
+            <p>Average population fitness is:</p>
+
+            <div class="equation">w̄ = p²wAA + 2pqwAa + q²waa</div>
+
+            <p>The frequency of allele A after selection is:</p>
+
+            <div class="equation">p' = (p²wAA + pqwAa) / w̄</div>
+
+            <p>
+              wAA, wAa, and waa represent the relative fitness values of the
+              three genotypes.
+            </p>
+
+            <p>
+              When heterozygotes have the highest fitness, balancing selection
+              can maintain both alleles at an intermediate frequency.
+            </p>
+
+            <h4>4. Genetic Drift</h4>
+            <p>
+              Genetic drift is random change in allele frequency caused by
+              sampling between generations.
+            </p>
+
+            <div class="equation">
+              X ~ Binomial(2N, p)
+              <br />
+              p' = X / (2N)
+            </div>
+
+            <p>
+              N = number of diploid individuals<br />
+              2N = total allele copies<br />
+              X = number of sampled A alleles
+            </p>
+
+            <p>
+              Genetic drift is stronger in smaller populations. An allele can
+              become lost (p = 0) or fixed (p = 1) purely through chance.
+            </p>
+
+            <h4>Combining Evolutionary Forces</h4>
+
+            <p>
+              When multiple forces are enabled, our simulator applies them
+              sequentially:
+            </p>
+
+            <div class="equation">Mutation → Gene Flow → Selection → Drift</div>
+
+            <p>
+              The output of each enabled force becomes the input to the next.
+              Because these operations are not generally interchangeable,
+              changing their order can change the results.
+            </p>
+          </div>
+        </details>
+
+        <!-- Model Assumptions -->
+
+        <!-- Model Assumptions and Limitations -->
+        <details class="education-panel">
+          <summary>Model Assumptions & Limitations</summary>
+
+          <div class="education-content">
+            <h4>Wright-Fisher Population Model</h4>
+            <p>
+              Human Selection Lab uses a simplified diploid Wright-Fisher model
+              to simulate changes in the frequency of one tracked genetic unit.
+            </p>
+
+            <p>
+              The population contains N diploid individuals, representing 2N
+              copies of the tracked locus. Generations are discrete and
+              non-overlapping, and population size remains constant during each
+              simulation.
+            </p>
+
+            <h4>Hardy-Weinberg Assumptions</h4>
+            <p>
+              Before applying natural selection, the model calculates genotype
+              frequencies using p², 2pq, and q².
+            </p>
+
+            <p>
+              This assumes random mating and Hardy-Weinberg proportions at the
+              modeled locus before selection. Real populations may depart from
+              these assumptions.
+            </p>
+
+            <h4>Constant Evolutionary Parameters</h4>
+            <p>
+              Population size, mutation rates, and genotype fitness values
+              remain constant throughout a run.
+            </p>
+
+            <p>
+              Migration occurs for the specified number of initial generations,
+              using a constant source allele frequency and migration rate.
+            </p>
+
+            <h4>Order of Evolutionary Forces</h4>
+            <p>
+              Enabled forces are applied in this order: mutation, gene flow,
+              natural selection, and genetic drift.
+            </p>
+
+            <p>
+              This is a modeling decision rather than a universal biological
+              sequence. Different life-cycle assumptions can produce different
+              results.
+            </p>
+
+            <h4>Randomness and Repeated Simulations</h4>
+            <p>
+              When genetic drift is enabled, the model randomly samples 2N
+              allele copies each generation.
+            </p>
+
+            <p>
+              Repeated simulations can therefore produce different trajectories
+              even when their starting parameters are identical.
+            </p>
+
+            <h4>Evolutionary Time</h4>
+            <p>
+              Users can specify the approximate number of years represented by
+              one generation.
+            </p>
+
+            <p>
+              Total elapsed time is calculated by multiplying the number of
+              generations by the selected generation length.
+            </p>
+
+            <p>
+              This conversion does not change the evolutionary calculations.
+            </p>
+
+            <h4>Real-World Population Comparisons</h4>
+            <p>
+              The world map displays published allele or haplotype frequencies
+              from sampled populations.
+            </p>
+
+            <p>
+              When comparing two populations, the simulator uses their observed
+              frequencies as starting conditions and applies the same
+              illustrative evolutionary parameters independently.
+            </p>
+
+            <p>
+              These trajectories do not reconstruct the actual evolutionary
+              histories of the sampled populations.
+            </p>
+
+            <h4>Scientific Limitations</h4>
+            <p>
+              The model does not explicitly represent age structure, spatial
+              population structure, changing population sizes, complex
+              inheritance, or interactions among multiple genetic loci.
+            </p>
+
+            <p>
+              Its biological scenarios simplify real evolutionary processes to
+              demonstrate fundamental population-genetic mechanisms.
+            </p>
+
+            <p>
+              All preset parameters are illustrative and should not be
+              interpreted as measured historical fitness values, migration
+              rates, or mutation rates.
+            </p>
+          </div>
+        </details>
+      </section>
+
       <!-- Geographic Allele Frequencies -->
       <section class="map-section">
         <div class="map-header">
@@ -784,24 +1076,15 @@
           >
           <div class="frequency-legend-items">
             <span class="frequency-legend-item"
-              ><span
-                class="frequency-circle"
-                style="width: 17px; height: 17px"
-              ></span
+              ><span class="frequency-circle" data-frequency="0.05"></span
               >5%</span
             >
             <span class="frequency-legend-item"
-              ><span
-                class="frequency-circle"
-                style="width: 26px; height: 26px"
-              ></span
+              ><span class="frequency-circle" data-frequency="0.25"></span
               >25%</span
             >
             <span class="frequency-legend-item"
-              ><span
-                class="frequency-circle"
-                style="width: 38px; height: 38px"
-              ></span
+              ><span class="frequency-circle" data-frequency="0.75"></span
               >75%</span
             >
           </div>
@@ -875,5 +1158,7 @@
     <script src="app.js"></script>
     <script src="map-content.js"></script>
     <script src="map.js"></script>
+    <script src="edu-content.js"></script>
+    <script src="education.js"></script>
   </body>
 </html>

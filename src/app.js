@@ -9,6 +9,7 @@ let settings = { ...presets.sickleCell };
 
 let alleleChart = null;
 let comparisonMode = false;
+let activeComparison = null; // { population1, population2, datasetName }
 
 // Scenario-specific chart titles
 const scenarioTitles = {
@@ -36,6 +37,7 @@ const resetButton = document.getElementById("resetButton");
 
 const chartCanvas = document.getElementById("alleleChart");
 const chartTitle = document.getElementById("chartTitle");
+const exitComparisonButton = document.getElementById("exitComparisonButton");
 
 const scenarioCards = document.querySelectorAll(".scenario-card");
 
@@ -342,6 +344,9 @@ function updateEvolutionaryTime() {
 
 function displayResults(allResults) {
   comparisonMode = false;
+  activeComparison = null;
+  runButton.textContent = "Run Simulation";
+  exitComparisonButton.hidden = true;
 
   // Restore normal interface
   chartTitle.textContent = scenarioTitles[selectedScenario];
@@ -373,6 +378,10 @@ function displayResults(allResults) {
 }
 
 function runAndDisplay() {
+  if (comparisonMode && activeComparison) {
+    runActiveComparison();
+    return;
+  }
   try {
     const results = runSimulation(settings);
     displayResults([results]);
@@ -425,6 +434,8 @@ function updateComparisonResults(results1, results2, population1, population2) {
 
 function displayComparison(results1, results2, population1, population2) {
   comparisonMode = true;
+  runButton.textContent = "Rerun Comparison";
+  exitComparisonButton.hidden = false;
 
   // Update interface for comparison mode
   chartTitle.textContent = `${scenarioTitles[selectedScenario]} — Population Comparison`;
@@ -459,46 +470,45 @@ function displayComparison(results1, results2, population1, population2) {
   updateEvolutionaryTime();
 }
 
+function runActiveComparison() {
+  if (!activeComparison) return;
+  const { population1, population2 } = activeComparison;
+
+  // Both populations use the current editable settings, except initial p.
+  const settings1 = { ...settings, startingAlleleFreq: population1.frequency };
+  const settings2 = { ...settings, startingAlleleFreq: population2.frequency };
+
+  try {
+    const results1 = runSimulation(settings1);
+    const results2 = runSimulation(settings2);
+    displayComparison(results1, results2, population1, population2);
+  } catch (error) {
+    alert("Comparison error: " + error.message);
+  }
+}
+
 function comparePopulations(population1, population2, datasetName) {
   const scenarioName = scenarioMap[datasetName];
-
   if (!scenarioName) {
     console.error("Unknown comparison dataset:", datasetName);
     return;
   }
 
-  // Load the appropriate scenario preset
   selectedScenario = scenarioName;
   settings = { ...presets[scenarioName] };
+  activeComparison = {
+    population1: { ...population1 },
+    population2: { ...population2 },
+    datasetName,
+  };
 
-  // Highlight the selected scenario
   scenarioCards.forEach((card) => {
     card.classList.toggle("selected", card.dataset.scenario === scenarioName);
   });
-
   updateForceControls();
   updateParameterControls();
-
-  // Use the same evolutionary parameters,
-  // but different starting allele frequencies
-  const settings1 = {
-    ...settings,
-    startingAlleleFreq: population1.frequency,
-  };
-
-  const settings2 = {
-    ...settings,
-    startingAlleleFreq: population2.frequency,
-  };
-
-  try {
-    const results1 = runSimulation(settings1);
-    const results2 = runSimulation(settings2);
-
-    displayComparison(results1, results2, population1, population2);
-  } catch (error) {
-    alert("Comparison error: " + error.message);
-  }
+  updateEducationContent(selectedScenario);
+  runActiveComparison();
 }
 
 // ============================================================
@@ -509,11 +519,20 @@ runButton.addEventListener("click", runAndDisplay);
 
 runMultipleButton.addEventListener("click", runMultipleSimulations);
 
+// Explicitly exit comparison mode and restore the current scenario.
+exitComparisonButton.addEventListener("click", () => {
+  comparisonMode = false;
+  activeComparison = null;
+  runAndDisplay();
+});
+
 // Change scenario
 scenarioCards.forEach((card) => {
   card.addEventListener("click", () => {
     selectedScenario = card.dataset.scenario;
     settings = { ...presets[selectedScenario] };
+    comparisonMode = false;
+    activeComparison = null;
 
     scenarioCards.forEach((otherCard) => {
       otherCard.classList.toggle("selected", otherCard === card);
@@ -528,6 +547,8 @@ scenarioCards.forEach((card) => {
 
 // Reset selected scenario
 resetButton.addEventListener("click", () => {
+  comparisonMode = false;
+  activeComparison = null;
   settings = { ...presets[selectedScenario] };
 
   updateForceControls();
@@ -549,3 +570,6 @@ chartTitle.textContent = scenarioTitles[selectedScenario];
 interpretationPanel.hidden = false;
 resultsSummary.hidden = false;
 comparisonResultsPanel.hidden = true;
+
+// The starting screen uses the default scenario; render it immediately.
+runAndDisplay();
