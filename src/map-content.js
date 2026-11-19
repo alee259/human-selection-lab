@@ -1,6 +1,6 @@
 const mapContent = {
   hbs: {
-    title: "HbS — Sickle-Cell Allele",
+    title: "HbS - Sickle-Cell Allele",
 
     populations:
       "These five African populations were selected because " +
@@ -27,7 +27,7 @@ const mapContent = {
   },
 
   lactase: {
-    title: "Lactase Persistence — rs4988235",
+    title: "Lactase Persistence - rs4988235",
 
     populations:
       "These five 1000 Genomes reference populations were " +
@@ -56,7 +56,7 @@ const mapContent = {
   },
 
   epas1: {
-    title: "EPAS1 — High-Altitude Adaptation",
+    title: "EPAS1 - High-Altitude Adaptation",
 
     populations:
       "These four Asian populations were selected because " +

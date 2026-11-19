@@ -1216,6 +1216,24 @@ button:hover {
   line-height: 1.75;
 }
 
+/* Scenario explanation disclaimer */
+.scenario-disclaimer {
+  margin-top: 14px;
+  padding: 12px 16px;
+
+  background: var(--background);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.scenario-disclaimer strong {
+  color: var(--accent);
+}
+
 @media (max-width: 650px) {
   .comparison-results-grid {
     grid-template-columns: 1fr;
@@ -1287,4 +1305,41 @@ button:hover {
 }
 .map-origin-control input:disabled {
   cursor: not-allowed;
+}
+
+/* Model interpretation and behind-the-scenes notes */
+.mechanism-insight {
+  margin-top: 16px;
+  padding: 16px 18px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 9px;
+}
+.mechanism-insight h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: var(--accent);
+}
+.mechanism-insight p,
+.time-explanation {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.75;
+}
+.time-explanation {
+  margin-top: 12px;
+  max-width: 900px;
+}
+.simulation-steps {
+  padding-left: 24px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.simulation-steps li {
+  margin-bottom: 10px;
+}
+.simulation-steps strong {
+  color: var(--text);
 }

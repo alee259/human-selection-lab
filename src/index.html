@@ -651,6 +651,16 @@
             </p>
 
             <p id="eventTiming" class="event-timing"></p>
+            <div class="mechanism-insight">
+              <h3>Why did this happen?</h3>
+              <p id="mechanismExplanation" aria-live="polite"></p>
+            </div>
+
+            <p class="scenario-disclaimer">
+              <strong>Note:</strong> Biological explanations are based on the
+              selected scenario's default assumptions. Modifying evolutionary
+              parameters may produce different outcomes.
+            </p>
 
             <p class="interpretation-note">
               Allele loss means frequency 0; fixation means frequency 1. Counts
@@ -672,12 +682,12 @@
 
                 <p>
                   Starting Frequency:
-                  <strong id="comparisonStart1">—</strong>
+                  <strong id="comparisonStart1">-</strong>
                 </p>
 
                 <p>
                   Final Frequency:
-                  <strong id="comparisonFinal1">—</strong>
+                  <strong id="comparisonFinal1">-</strong>
                 </p>
 
                 <p id="comparisonOutcome1"></p>
@@ -688,18 +698,22 @@
 
                 <p>
                   Starting Frequency:
-                  <strong id="comparisonStart2">—</strong>
+                  <strong id="comparisonStart2">-</strong>
                 </p>
 
                 <p>
                   Final Frequency:
-                  <strong id="comparisonFinal2">—</strong>
+                  <strong id="comparisonFinal2">-</strong>
                 </p>
 
                 <p id="comparisonOutcome2"></p>
               </div>
             </div>
 
+            <div class="mechanism-insight">
+              <h3>Why do these trajectories differ?</h3>
+              <p id="comparisonMechanismExplanation" aria-live="polite"></p>
+            </div>
             <p class="comparison-note">
               These are independent hypothetical simulations using identical
               evolutionary parameters except for starting allele frequency. They
@@ -726,6 +740,11 @@
               Approximate elapsed time:
               <strong id="elapsedYearsResult">-</strong>
             </p>
+            <p
+              id="timeExplanation"
+              class="time-explanation"
+              aria-live="polite"
+            ></p>
           </section>
         </section>
       </div>
@@ -743,6 +762,58 @@
             simulation models evolution.
           </p>
         </div>
+
+        <!-- Behind-the-scenes process -->
+        <details class="education-panel">
+          <summary>Behind the Simulation: One Generation at a Time</summary>
+          <div class="education-content">
+            <p>
+              The model begins at generation 0 with a tracked allele frequency
+              p. The other allele has frequency q = 1 - p. Each generation
+              applies only the forces you enabled, in the fixed order below.
+            </p>
+            <ol class="simulation-steps">
+              <li>
+                <strong>Mutation:</strong> Some A copies change to a and some a
+                copies change to A, according to the two rates.
+              </li>
+              <li>
+                <strong>Gene flow:</strong> During the selected migration
+                window, the receiving population mixes its frequency with a
+                fixed source population.
+              </li>
+              <li>
+                <strong>Selection:</strong> The program assumes Hardy-Weinberg
+                genotype proportions p², 2pq and q², weights them by relative
+                fitness, and calculates the updated tracked frequency.
+              </li>
+              <li>
+                <strong>Drift:</strong> If enabled, the program independently
+                samples 2N allele copies. Each copy has probability p of being
+                the tracked allele, so the number of tracked copies follows a
+                binomial distribution. The new frequency is the count divided by
+                2N.
+              </li>
+              <li>
+                <strong>Record and repeat:</strong> Save the frequency for the
+                new generation and repeat until the requested generation count
+                is reached.
+              </li>
+            </ol>
+            <p>
+              <strong>Why the order matters:</strong> Each step uses the
+              previous step's output. Reordering these operations can change the
+              result. This is a simplified model life cycle, not a universal
+              biological sequence.
+            </p>
+            <p>
+              <strong>Run 10 Times:</strong> Each run starts from the same
+              parameters but performs independent random drift sampling, so the
+              trajectories may differ. With drift off, identical settings
+              produce identical paths.
+            </p>
+          </div>
+        </details>
 
         <!-- Scenario Background -->
         <details class="education-panel" open>

@@ -282,6 +282,70 @@ function describeAlleleOutcome(results) {
   return "The tracked allele ended at its starting frequency.";
 }
 
+// Explain enabled mechanisms without treating the observed path as proof of causation.
+function explainMechanisms(results, runSettings = settings) {
+  const start = results[0];
+  const end = results.at(-1);
+  const notes = [];
+  const delta = end - start;
+  const direction = Math.abs(delta) < 1e-10 ? "unchanged overall" :
+    delta > 0 ? "increased overall" : "decreased overall";
+  notes.push(`The tracked frequency ${direction} from ${(start * 100).toFixed(1)}% to ${(end * 100).toFixed(1)}% over ${results.length - 1} generations.`);
+
+  if (runSettings.enableSelection) {
+    const { fitnessAA: aa, fitnessAa: hetero, fitnessaa: other } = runSettings;
+    if (aa === hetero && hetero === other) {
+      notes.push("Selection is enabled, but all three genotype fitnesses are equal, so it has no effect.");
+    } else {
+      try {
+        const selected = applySelection(start, aa, hetero, other);
+        const selectionDirection = selected > start + 1e-10 ? "favors an increase in" :
+          selected < start - 1e-10 ? "favors a decrease in" : "does not initially change";
+        notes.push(`With the specified genotype fitnesses, selection alone ${selectionDirection} the tracked frequency at its starting value. Its effect may change as allele frequencies change.`);
+        if (hetero > aa && hetero > other) {
+          notes.push("Heterozygote advantage can maintain both genetic states at an intermediate frequency rather than driving one to fixation.");
+        }
+      } catch (error) {
+        notes.push("Selection could not be evaluated at the initial frequency with these fitness values.");
+      }
+    }
+  }
+  if (runSettings.enableMutation) {
+    const net = (1 - start) * runSettings.forwardMutationRate - start * runSettings.reverseMutationRate;
+    notes.push(`Mutation changes copies in both directions (a to A: ${runSettings.forwardMutationRate}; A to a: ${runSettings.reverseMutationRate}). At the starting frequency, its expected direct contribution is ${net >= 0 ? "+" : ""}${net.toFixed(5)} per generation before other forces.`);
+  }
+  if (runSettings.enableGeneFlow) {
+    if (runSettings.migrationGenerations > 0 && runSettings.migrationRate > 0) {
+      notes.push(`For the first ${Math.min(runSettings.generations, runSettings.migrationGenerations)} generations, migration (${(runSettings.migrationRate * 100).toFixed(1)}% per generation) pulls the frequency toward the source frequency of ${(runSettings.sourceAlleleFreq * 100).toFixed(1)}%.`);
+    } else {
+      notes.push("Gene flow is enabled but its rate or duration is zero, so it has no effect.");
+    }
+  }
+  if (runSettings.enableDrift) {
+    notes.push(`Drift samples ${2 * runSettings.populationSize} allele copies each generation. Chance can push the path above or below its expected trend; smaller populations generally fluctuate more.`);
+  } else {
+    notes.push("Drift is disabled, so repeated runs with identical parameters follow the same deterministic trajectory.");
+  }
+  if (!runSettings.enableMutation && !runSettings.enableGeneFlow && !runSettings.enableSelection && !runSettings.enableDrift) {
+    notes.push("No forces are enabled, so the frequency remains constant.");
+  }
+  notes.push("These are explanations of the model's mechanisms, not proof of which force caused each movement or a reconstruction of a real population's history.");
+  return notes.join(" ");
+}
+
+function explainEvolutionaryTime(runSettings = settings) {
+  const years = runSettings.generations * runSettings.yearsPerGeneration;
+  const selectionNote = runSettings.enableSelection
+    ? "Fitness differences influence the pace of allele-frequency change: larger advantages often cause faster shifts, but the starting frequency, genotype relationships, and other forces matter too."
+    : "Natural selection is disabled in this run; changes, if any, come from other enabled forces.";
+  return `${runSettings.generations} generations at ${runSettings.yearsPerGeneration} years each represent approximately ${years.toLocaleString()} years. ${selectionNote} Changing years per generation only changes this calendar-time conversion; it does not alter the simulation trajectory. These are illustrative times, not dated historical estimates.`;
+}
+
+function updateMechanismExplanation(results, runSettings = settings) {
+  const element = document.getElementById("mechanismExplanation");
+  if (element) element.textContent = explainMechanisms(results, runSettings);
+}
+
 function updateInterpretation(allResults) {
   const firstRun = allResults[0];
 
@@ -336,6 +400,9 @@ function updateEvolutionaryTime() {
 
   document.getElementById("elapsedYearsResult").textContent =
     `${elapsedYears.toLocaleString()} years`;
+
+  const timeExplanation = document.getElementById("timeExplanation");
+  if (timeExplanation) timeExplanation.textContent = explainEvolutionaryTime();
 }
 
 // ============================================================
@@ -375,6 +442,7 @@ function displayResults(allResults) {
   updateResultsSummary(allResults);
   updateInterpretation(allResults);
   updateEvolutionaryTime();
+  updateMechanismExplanation(allResults[0]);
 }
 
 function runAndDisplay() {
@@ -466,6 +534,14 @@ function displayComparison(results1, results2, population1, population2) {
   renderChart(datasets, results1.length - 1, true);
 
   updateComparisonResults(results1, results2, population1, population2);
+
+  const comparisonExplanation = document.getElementById("comparisonMechanismExplanation");
+  if (comparisonExplanation) {
+    comparisonExplanation.textContent =
+      `Both runs use the same settings except for their starting frequencies. ` +
+      `Population 1: ${explainMechanisms(results1)} Population 2: ${explainMechanisms(results2)} ` +
+      `These simulations are independent; they do not exchange migrants with each other.`;
+  }
 
   updateEvolutionaryTime();
 }
