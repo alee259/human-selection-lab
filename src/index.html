@@ -8,15 +8,11 @@
     <link rel="stylesheet" href="style.css" />
 
     <!-- Chart.js library -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+    <script src="vendor/chart.umd.min.js"></script>
 
     <!-- Leaflet map library -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+    <script src="vendor/leaflet/leaflet.js"></script>
   </head>
 
   <body>
@@ -594,9 +590,12 @@
               <p class="eyebrow">SIMULATION RESULTS</p>
               <h2 id="chartTitle">Allele A Frequency Over Time</h2>
               <p class="chart-description">
-                Allele frequency is the proportion of all allele copies that are
-                A. For example, 0.7 means 70% A and 30% a. A is not necessarily
-                the dominant allele.
+                  The graph tracks the frequency of a selected allele or
+                  haplotype across generations. A frequency of 0.7 means
+                  that 70% of the sampled genetic copies are the tracked
+                  variant. In the mathematical model, the tracked genetic
+                  state is represented by A, which is not necessarily
+                  dominant or beneficial.
               </p>
             </div>
 

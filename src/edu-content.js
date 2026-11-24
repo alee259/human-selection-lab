@@ -64,8 +64,15 @@ const educationContent = {
       "The preset combines gene flow, selection, and drift. Gene flow introduces a tracked genetic unit from a source population, while selection changes its frequency based on assigned genotype fitnesses.",
     prediction:
       "The simulated haplotype may rise in frequency when migration introduces it and selection favors its carriers. These illustrative migration rates and fitnesses are not estimates of historical introgression.",
+    
     caveat:
-      "The map tracks a defined EPAS1 haplotype, while the simulator treats it as one of two possible genetic units. It does not reconstruct Denisovan admixture, multiple linked variants, or actual Tibetan population history.",
+      "The map tracks a defined EPAS1 adaptive haplotype, " +
+      "rather than a single genetic variant. The simulator " +
+      "simplifies this haplotype into one tracked genetic " +
+      "state versus all other haplotypes. It does not model " +
+      "the individual linked variants or reconstruct " +
+      "actual Tibetan evolutionary history.",
+
     sources: [
       {
         label:
